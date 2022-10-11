@@ -1,0 +1,29 @@
+module cROM (in, enl, out, clk);
+
+	input [7:0] in;
+	input enl, clk;
+	integer i;
+
+	output reg [31:0] out;
+
+	reg [255:0] mem [0:7];
+
+always @(posedge clk) begin
+	
+	for (i = 0; i < 256; i=i+1) begin
+		mem[i] <= i+5;
+		end
+	
+	
+	
+	
+	if(enl == 1) begin
+		 
+		out <= {mem[in], mem[in + 1], mem[in + 2], mem[in + 3]};
+		end
+	
+	
+	
+end
+
+endmodule

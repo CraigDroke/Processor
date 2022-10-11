@@ -1,0 +1,32 @@
+module cROM_t;
+
+reg [7:0] in;
+reg enl, clk;
+
+wire [31:0] out;
+
+cROM uut (.in(in), .enl(enl), .out(out), .clk(clk));
+
+initial begin 
+
+#10;
+clk = 0;
+enl = 1;
+
+#10;
+clk = 1;
+in = 0;
+
+#10;
+clk = 0;
+
+
+#10;
+clk = 1;
+in = 100;
+
+#10;
+clk = 0;
+
+end 
+endmodule

@@ -1,0 +1,35 @@
+module cRAM_t;
+
+reg [31:0] din;
+reg [7:0] memA;
+reg [2:0] cSel;
+reg clk, wEN;
+
+wire [31:0] out;
+
+cRAM uut (.cSel(cSel), .din(din), .memA(memA), .clk(clk), .wEN(wEN), .out(out));
+
+initial begin 
+
+#10;
+clk=1;
+wEN=1;
+din=63;
+cSel=1;
+memA=4;
+
+#10;
+clk=0;
+wEN=0;
+
+#10;
+clk=1;
+
+#10;
+clk=0;
+
+#10;
+clk=1;
+
+end
+endmodule 

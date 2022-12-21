@@ -6,6 +6,17 @@ module RegFile(
     output reg [31:0] outA, outB
 );
     reg [31:0] mem [0:31];
+
+	integer i;
+	
+	initial
+	begin
+		for (i=0; i<32; i= i+1)
+		begin
+			register[i]  <= 32'd0;
+		end
+	end
+
     always @(posedge clk) begin
         if (rw == 1) begin
             mem[rd] <= din;

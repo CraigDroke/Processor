@@ -1,20 +1,3 @@
-module Mux_2x1
-(
-    input [0:0] sel,
-    input [31:0] in_0,
-    input [31:0] in_1,
-    output reg [31:0] out
-);
-    always @ (*) begin
-        case (sel)
-            1'b0: out = in_0;
-            1'b1: out = in_1;
-            default:
-                out = 32'b0;
-        endcase
-    end
-endmodule
-
 module DP (
     clk
 );
@@ -63,12 +46,11 @@ BrComp BrComp1(.opA(regOutA), .opB(regOutB), .brUn(brUn) ,.beq(beq), .blt(blt));
 ALU ALU1(.op(aluOp), .a(aluA), .b(aluB), .out(aluout));
 DMem DMem1(.addr(aluout), .din(regOutB), .dout(dMemOut), .memRW(memRW), .clk(clk));
 AddFour AddFour1(.addrin(pcOut), .addrout(addrout), .clk(clk));
-IMemSinExt IMemSinExt1(.in(ins), .imm_out(immsinextOut), .immSel(immSel), .clk(clk));
+Immsinext Immsinext1(.in(ins), .imm_out(immsinextOut), .immSel(immSel), .clk(clk));
 PC PC1(.addrin(pcIn), .addrout(pcOut), .clk(clk));
-Mux_2x1 PCSelMux1(.sel(pcSel), .in_0(addrout), .in_1(aluout), .out(pcIn));
-Mux_2x1 ASelMux1(.sel(aSel), .in_0(regOutA), .in_1(pcOut), .out(aluA));
-Mux_2x1 BSelMux1(.sel(bSel), .in_0(regOutB), .in_1(immsinextOut), .out(aluB));
-Mux_2x1 RegSelMux1(.sel(regSel), .in_0(dMemOut), .in_1(aluout), .out(din));
-
+Mux_2x1 PCSelMux1(.sel(pcSel), .in_0(addrout), .in_1(immsinextOut), .out(pcIn));
+Mux_2x1 RegDinMux1(.sel(regSel), .in_0(aluout), .in_1(dMemOut), .out(din));
+Mux_2x1 AMux1(.sel(aSel), .in_0(regOutA), .in_1(immsinextOut), .out(aluA));
+Mux_2x1 BMux1(.sel(bSel), .in_0(regOutB), .in_1(immsinextOut), .out(aluB));
 
 endmodule

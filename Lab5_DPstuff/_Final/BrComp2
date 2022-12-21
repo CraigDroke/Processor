@@ -6,7 +6,12 @@ module BrComp(
   output reg beq
 );
 
-reg [31:0] A = opA, B = opB;
+reg [31:0] A, B;
+
+initial begin
+  A = opA;
+  B = opB;
+end
 
 always @* begin
   if (brUn) begin

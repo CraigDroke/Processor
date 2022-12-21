@@ -1,0 +1,26 @@
+module BrComp(
+  input opA,
+  input opB,
+  input brUn,
+  output reg blt,
+  output reg beq
+);
+
+always @* begin
+  // Compare the most significant bits of opA and opB
+  if (opA) begin
+    blt = 0;
+  end else if (opB) begin
+    blt = 1;
+  end else begin
+    blt = 0;
+  end
+  
+  if (opA == opB) begin
+    beq = 1;
+  end else begin
+    beq = 0;
+  end
+end
+
+endmodule

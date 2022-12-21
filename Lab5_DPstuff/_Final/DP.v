@@ -49,8 +49,8 @@ AddFour AddFour1(.addrin(pcOut), .addrout(addrout), .clk(clk));
 Immsinext Immsinext1(.in(ins), .imm_out(immsinextOut), .immSel(immSel), .clk(clk));
 PC PC1(.addrin(pcIn), .addrout(pcOut), .clk(clk));
 Mux_2x1 PCSelMux1(.sel(pcSel), .in_0(addrout), .in_1(immsinextOut), .out(pcIn));
-Mux_2x1 RegDinMux1(.sel(regSel), .in_0(aluout), .in_1(dMemOut), .out(din));
-Mux_2x1 AMux1(.sel(aSel), .in_0(regOutA), .in_1(immsinextOut), .out(aluA));
+Mux_2x1 RegDinMux1(.sel(regSel), .in_0(dMemOut), .in_1(aluout), .out(din));
+Mux_2x1 AMux1(.sel(aSel), .in_0(regOutA), .in_1(pcOut), .out(aluA));
 Mux_2x1 BMux1(.sel(bSel), .in_0(regOutB), .in_1(immsinextOut), .out(aluB));
 
 endmodule

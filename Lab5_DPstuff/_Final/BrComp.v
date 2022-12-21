@@ -1,51 +1,27 @@
-module BrComp(opA, opB, brUn, blt, beq);
-
-input [31:0] opA, opB; //32 bit inputs
-input brUn; //unsigned control signal
-output reg blt, beq;
-reg [31:0] A=opA, B=opB;
-
-always@(*) begin
-
-if (brUn) begin
-
-	if (opA[31]) begin
-		
-		A <= A + 1;
-		A = ~A;
+module branch_comp(opA, opB, beq, blt, brUn);
+	input [31:0]opA, opB;
+	input brUn;
+	output reg beq, blt;
 	
+	always@(opA or opB or brUn)
+	begin
+		if (brUn == 1'b1) // so sanh co dau
+		begin
+			if (opA[31] == opB[31]) // opA va opB cung bit dau
+			begin 
+				beq = (opA == opB); // beq = 1 neu A = B, beq = 0 neu A != B
+				blt = (opA < opB); 
+			end
+			else // opA != opB
+			begin
+				beq = 1'b0; // beq = 1 neu A = B, beq = 0 neu A != B
+				blt = (opA[31] == 1); // opA = 1xxx..xxxx, opB = 0xxx..xxxx 
+			end
+		end
+		else // so sanh khong dau
+		begin 
+			beq = (opA == opB); 
+			blt = (opA < opB);
+		end
 	end
-	
-	if (opB[31]) begin
-		
-		B <= B - 1;
-		B = ~B;
-	
-	end
-	
-end
-	
-if (A < B) begin
-	
-	blt = 1;
-	
-end 
-else begin
-		
-	blt = 0;
-		
-end
-	
-if (A == B) begin
-	
-	beq = 1;
-		
-end 
-else begin
-	
-	beq = 0;
-		
-end
-
-end
 endmodule

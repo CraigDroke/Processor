@@ -11,7 +11,7 @@ module IMem (
     integer i;
     
     initial begin
-        $readmemh("instructions.dat",IMEM);
+        $readmemh("instructions.dat", mem);
     end
 
     always @(posedge clk) begin

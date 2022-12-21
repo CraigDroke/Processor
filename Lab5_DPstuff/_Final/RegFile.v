@@ -3,7 +3,7 @@ module RegFile(
     input [31:0] din,
     input rw,
     input clk,
-    output [31:0] outA, outB
+    output reg [31:0] outA, outB
 );
     reg [31:0] mem [0:31];
     always @(posedge clk) begin

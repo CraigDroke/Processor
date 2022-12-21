@@ -3,7 +3,7 @@ module DMem(
     input [31:0] din,
     input clk,
     input memRW,
-    output [31:0] dout,
+    output reg [31:0] dout
 );
 
 reg [31:0] mem [0:31];
